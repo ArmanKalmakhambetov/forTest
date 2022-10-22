@@ -30,8 +30,16 @@ class Calc {
 
         try {
             String[] data = input.split(regexActions[actionIndex]);
+            
+            if (data.length > 2 ) {
+                throw new NumberFormatException("//т.к. формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
+            }
 
-            if (converter.isRoman(data[0]) == converter.isRoman(data[1])) {
+            else if (data.length < 2) {
+                throw new NumberFormatException("//т.к. строка не является математической операцией");
+            }
+
+            else if (converter.isRoman(data[0]) == converter.isRoman(data[1])) {
                 String total;
                 int a, b;
 
@@ -70,18 +78,18 @@ class Calc {
                     }
                     return total;
                 } else {
-                    throw new NumberFormatException("\nВведите числа от 1 до 10");
+                    throw new NumberFormatException("//т.к. вводимые числа должны быть от 1 до 10");
                 }
             } else {
-                throw new NumberFormatException("\nЧисла должны быть в одном формате");
+                throw new NumberFormatException("//т.к. используются одновременно разные системы счисления");
             }
 
         } catch (NumberFormatException e) {
             return String.valueOf(e);
         } catch (ArrayIndexOutOfBoundsException e) {
-            return "Введите выражение вида: [1 + 2] или [I + II].\n" + "Вводимые операторы должны быть: +, -, *, /.\n" + "Имя исключения: " + e;
+            return e + "//т.к. строка не является математической операцией";
         } catch (NullPointerException e) {
-            return "Ответ не может быть меньше I.\nИмя исключения: " + e;
+            return e + "//т.к. в римской системе нет отрицательных чисел";
         }
 
     }
